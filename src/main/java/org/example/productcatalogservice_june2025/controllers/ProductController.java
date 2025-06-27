@@ -1,29 +1,38 @@
 package org.example.productcatalogservice_june2025.controllers;
 
-import org.example.productcatalogservice_june2025.models.Product;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.productcatalogservice_june2025.dtos.ProductDto;
+import org.example.productcatalogservice_june2025.services.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //@RestController = @Controller + @ResponseBody
+// https://www.baeldung.com/spring-bean-scopes
 @RestController
 public class ProductController {
 
+    @Autowired
+   IProductService productService;
+
+
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        //Dummy Response
-        Product product = new Product();
-        product.setId(1L);
-        product.setPrice(1000D);
-        List<Product> productList = new ArrayList<>();
-        productList.add(product);
-        return productList;
+    public List<ProductDto> getAllProducts() {
+        return null;
     }
 
-    //H/W :  Create a dummy API Wrapper for GetProductById where id will be input
+    //Read for @PathVariable , @RequestParam and @QueryParam
+    //https://www.baeldung.com/spring-requestparam-vs-pathvariable
+    @GetMapping("/products/{id}")
+    public  ProductDto getProductById(@PathVariable("id") Long productId) {
+      return null;
+    }
+
+    @PostMapping("products")
+    public ProductDto createProduct(@RequestBody ProductDto productDto) {
+      return productDto;
+    }
+
+
 }
 
