@@ -18,4 +18,7 @@ public class Product extends BaseModel {
 
     //Related to Business
     private Boolean isPrimeSaleSpecific;
+
+    //private Double commisionPerPiece;
+
 }
