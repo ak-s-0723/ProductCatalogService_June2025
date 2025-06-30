@@ -14,7 +14,9 @@ public interface IProductService {
 
     Product createProduct(Product product);
 
-    List<Product> getAllProducts();
+    Product replaceProduct(Product input,Long id);
+
+    List<Product> getAllProducts(); //ToDo : H/W for learners
 }
 
 
