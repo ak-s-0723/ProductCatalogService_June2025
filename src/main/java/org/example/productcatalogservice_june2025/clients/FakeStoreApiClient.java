@@ -3,6 +3,7 @@ package org.example.productcatalogservice_june2025.clients;
 import org.example.productcatalogservice_june2025.dtos.FakeStoreProductDto;
 import org.example.productcatalogservice_june2025.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
