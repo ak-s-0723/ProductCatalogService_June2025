@@ -1,5 +1,6 @@
 package org.example.productcatalogservice_june2025.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.productcatalogservice_june2025.dtos.CategoryDto;
 import org.example.productcatalogservice_june2025.dtos.ProductDto;
 import org.example.productcatalogservice_june2025.models.Category;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //@RestController = @Controller + @ResponseBody
@@ -23,9 +25,18 @@ public class ProductController {
    IProductService productService;
 
 
+
     @GetMapping("/products")
     public List<ProductDto> getAllProducts() {
-        return null;
+        List<ProductDto> productDtos = new ArrayList<>();
+        List<Product> products = productService.getAllProducts();
+        //return products;
+       for(Product product : products) {
+           ProductDto productDto = from(product);
+           productDtos.add(productDto);
+       }
+
+       return productDtos;
     }
 
     //Read for @PathVariable , @RequestParam and @QueryParam
@@ -33,9 +44,13 @@ public class ProductController {
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long productId) {
        // try {
-            if (productId <= 0) {
+            if (productId < 0) {
                 throw new IllegalArgumentException("Product Id not found");
             }
+            else if(productId == 0) {
+                throw new IllegalArgumentException("Products exist with positive id");
+            }
+
             Product product = productService.getProductById(productId);
             if (product == null) return null;
 
