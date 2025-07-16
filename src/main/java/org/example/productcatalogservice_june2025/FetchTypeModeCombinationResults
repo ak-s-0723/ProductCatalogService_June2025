@@ -4,25 +4,25 @@ LAZY             SELECT             Asked For Products - Queries - 2 select quer
                                     Not Asked For Products - Queries - 1 select query
 
 
-EAGER            SELECT             Asked For Products - Queries -
-                                    Not Asked For Products - Queries -
+EAGER            SELECT             Asked For Products - Queries - 2 select
+                                    Not Asked For Products - Queries - 2 select
+
+---
+
+LAZY             JOIN               Asked For Products - Queries - 1 join
+                                    Not Asked For Products - Queries - 1 join
 
 
 
-LAZY             JOIN               Asked For Products - Queries -
-                                    Not Asked For Products - Queries -
+EAGER            JOIN               Asked For Products - Queries - 1 join
+                                    Not Asked For Products - Queries - 1 join
+
+---
+
+LAZY             SUBSELECT           Asked For Products - Queries -  2 select
+                                     Not Asked For Products - Queries -  1 select
 
 
 
-EAGER            JOIN               Asked For Products - Queries -
-                                    Not Asked For Products - Queries -
-
-
-
-LAZY             SUBSELECT           Asked For Products - Queries -
-                                     Not Asked For Products - Queries -
-
-
-
-EAGER            SUBSELECT          Asked For Products - Queries -
-                                    Not Asked For Products - Queries -
+EAGER            SUBSELECT          Asked For Products - Queries - 2 select
+                                    Not Asked For Products - Queries - 2 select
