@@ -21,9 +21,9 @@ class CategoryRepoTest {
     @Transactional //Why I am adding this ?
     public  void testLoading() {
         Optional<Category> categoryOptional = categoryRepo.findById(2L);
-        for(Product p : categoryOptional.get().getProducts()) {
-            System.out.println(p.getName());
-        }
+//        for(Product p : categoryOptional.get().getProducts()) {
+//            System.out.println(p.getName());
+//        }
     }
 
 }
