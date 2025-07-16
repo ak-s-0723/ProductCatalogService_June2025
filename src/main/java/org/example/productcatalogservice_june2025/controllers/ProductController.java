@@ -67,6 +67,8 @@ public class ProductController {
         Product output = productService.createProduct(product);
         if(output == null) return null;
         return  from(output);
+
+       // return productDto;
     }
 
     @PutMapping("/products/{id}")
