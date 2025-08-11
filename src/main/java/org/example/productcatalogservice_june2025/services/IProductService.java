@@ -17,6 +17,8 @@ public interface IProductService {
     Product replaceProduct(Product input,Long id);
 
     List<Product> getAllProducts(); //ToDo : H/W for learners
+
+    Product getProductDetailsBasedOnUserScope(Long userId,Long productId);
 }
 
 
