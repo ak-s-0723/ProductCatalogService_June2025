@@ -8,6 +8,8 @@ import org.example.productcatalogservice_june2025.models.Product;
 import org.example.productcatalogservice_june2025.models.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
+@Primary
 public class FakeStoreProductService implements IProductService {
 
     @Autowired
@@ -29,23 +32,46 @@ public class FakeStoreProductService implements IProductService {
     @Autowired
     private FakeStoreApiClient fakeStoreApiClient;
 
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
+
     @Override
     public Product getProductById(Long id) {
       RestTemplate restTemplate = restTemplateBuilder.build();
-      ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity =
-              restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",
-              FakeStoreProductDto.class,id);
 
-      FakeStoreProductDto fakeStoreProductDto =
-              fakeStoreProductDtoResponseEntity.getBody();
+      //if(found in redis)
+      //  return
+      //else
+      //call fakestore
+      //cache it
+      //return it
 
-      if(fakeStoreProductDto != null &&
-              fakeStoreProductDtoResponseEntity.getStatusCode() ==
-                      HttpStatus.valueOf(200)) {
-          return from(fakeStoreProductDto);
-      }
+      FakeStoreProductDto fakeStoreProductDto = null;
 
-      return null;
+     fakeStoreProductDto= (FakeStoreProductDto) redisTemplate.opsForHash().get("PRODUCTS",id);
+
+     if(fakeStoreProductDto == null) {
+         System.out.println("Not found in Redis");
+         fakeStoreProductDto =
+                 restTemplate.getForEntity("https://fakestoreapi.com/products/{id}",
+                         FakeStoreProductDto.class, id).getBody();
+
+         redisTemplate.opsForHash().put("PRODUCTS",id,fakeStoreProductDto);
+
+//      FakeStoreProductDto fakeStoreProductDto =
+//              fakeStoreProductDtoResponseEntity.getBody();
+
+//      if(fakeStoreProductDto != null &&
+//              fakeStoreProductDtoResponseEntity.getStatusCode() ==
+//                      HttpStatus.valueOf(200)) {
+         return from(fakeStoreProductDto);
+         //     }
+     } else {
+         System.out.println("Found in Redis");
+         return from(fakeStoreProductDto);
+     }
+
+      //return null;
     }
 
     @Override
